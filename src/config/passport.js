@@ -66,13 +66,17 @@ passport.use(
         "INSERT INTO products (email, name, password) VALUES (admin, 'admin');";
 
       pool.query(create, (err, res) => {
+        console.log("🚀 ~ file: passport.js ~ line 69 ~ pool.query ~ err", err);
         console.log("🚀 ~ file: passport.js ~ line 69 ~ pool.query ~ res", res);
       });
 
       pool.query(insert, (err, res) => {
+        console.log("🚀 ~ file: passport.js ~ line 74 ~ pool.query ~ err", err);
         console.log("🚀 ~ file: passport.js ~ line 74 ~ pool.query ~ res", res);
       });
       pool.query("SELECT * FROM users WHERE email=$1", [email], (err, res) => {
+        console.log("🚀 ~ file: passport.js ~ line 76 ~ pool.query ~ err", err);
+        console.log("🚀 ~ file: passport.js ~ line 76 ~ pool.query ~ res", res);
         if (err) return done(err);
         const rows = res?.rows;
         if (!rows.length) {
