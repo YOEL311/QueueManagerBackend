@@ -3,8 +3,18 @@ const pg = require("pg");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
-const { Pool, Client } = require("pg");
-const pool = new Pool();
+// const { Pool, Client } = require("pg");
+// const pool = new Pool();
+
+const { Pool } = require("pg");
+const isProduction = process.env.NODE_ENV === "production";
+
+const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
+
+const pool = new Pool({
+  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+  ssl: isProduction,
+});
 
 // passport.use('local-signup', new LocalStrategy({
 // const query2 = "CREATE TABLE users (email varchar,  password varchar);";
