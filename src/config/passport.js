@@ -64,12 +64,12 @@ passport.use(
       // const query2 = "CREATE TABLE users (email varchar,  password varchar);";
       const create = "CREATE TABLE users (email varchar,  password varchar);";
       const insert =
-        "INSERT INTO products (email, name, password) VALUES (admin, 'admin');";
+        "INSERT INTO users (email, password) VALUES (admin, 'admin');";
 
-      pool.query(create, (err, res) => {
-        console.log("🚀 ~ file: passport.js ~ line 69 ~ pool.query ~ err", err);
-        console.log("🚀 ~ file: passport.js ~ line 69 ~ pool.query ~ res", res);
-      });
+      // pool.query(create, (err, res) => {
+      //   console.log("🚀 ~ file: passport.js ~ line 69 ~ pool.query ~ err", err);
+      //   console.log("🚀 ~ file: passport.js ~ line 69 ~ pool.query ~ res", res);
+      // });
 
       pool.query(insert, (err, res) => {
         console.log("🚀 ~ file: passport.js ~ line 74 ~ pool.query ~ err", err);
