@@ -14,13 +14,13 @@ router.get("/add", async (req, res, next) => {
     body: { queue },
   } = req;
   console.log("🚀 ~ file: queue.js ~ line 16 ~ router.get ~ queue", queue);
+  await pool.query(
+    "CREATE TABLE queue (id SERIAL,full_name varchar,status integer ,timestamp timestamp default current_timestamp);"
+  );
   await pool.query("INSERT INTO queue (full_name,status) values ($1,$2);", [
     queue.fullName,
     "0",
   ]);
-  pool.query(
-    "CREATE TABLE queue (id SERIAL,full_name varchar,status integer ,timestamp timestamp default current_timestamp);"
-  );
 
   pool.query("SELECT * FROM queue WHERE  status = 0;", (errQ, resQ) => {
     res.json(resQ.rows);
