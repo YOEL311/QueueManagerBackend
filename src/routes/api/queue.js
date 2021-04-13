@@ -6,13 +6,14 @@ const isProduction = process.env.NODE_ENV === "production";
 const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
 const pool = new Pool({
   connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-  ...(isProduction && { rejectUnauthorized: false }),
+  ...(isProduction && { ssl: { rejectUnauthorized: false } }),
 });
 
 router.get("/add", async (req, res, next) => {
   const {
     body: { queue },
   } = req;
+  console.log("🚀 ~ file: queue.js ~ line 16 ~ router.get ~ queue", queue);
   await pool.query("INSERT INTO queue (full_name,status) values ($1,$2);", [
     queue.fullName,
     "0",
