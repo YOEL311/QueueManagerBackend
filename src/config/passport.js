@@ -17,7 +17,6 @@ const pool = new Pool({
 });
 
 // passport.use('local-signup', new LocalStrategy({
-// const query2 = "CREATE TABLE users (email varchar,  password varchar);";
 // const query2 = "DROP TABLE users;";
 
 passport.serializeUser((user, done) => {
@@ -61,6 +60,20 @@ passport.use(
       passReqToCallback: true, // allows us to pass back the entire request to the callback
     },
     (req, email, password, done) => {
+      // const query2 = "CREATE TABLE users (email varchar,  password varchar);";
+      const create = "CREATE TABLE users (email varchar,  password varchar);";
+      const insert =
+        "INSERT INTO products (email, name, password) VALUES (admin, 'admin');";
+
+      pool.query(create(err, res) => {
+      console.log("🚀 ~ file: passport.js ~ line 69 ~ pool.query ~ res", res)
+        
+      });
+
+      pool.query(insert(err, res) => {
+      console.log("🚀 ~ file: passport.js ~ line 74 ~ pool.query ~ res", res)
+
+      });
       pool.query("SELECT * FROM users WHERE email=$1", [email], (err, res) => {
         if (err) return done(err);
         const rows = res?.rows;
