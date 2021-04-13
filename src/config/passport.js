@@ -10,7 +10,7 @@ const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPAS
 
 const pool = new Pool({
   connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-  ssl: { rejectUnauthorized: false },
+  ...(isProduction && { rejectUnauthorized: false }),
 });
 
 passport.serializeUser((user, done) => {
@@ -61,7 +61,6 @@ passport.use(
             false,
             req.flash("loginMessage", "Oops! Wrong password.")
           ); // create the loginMessage and save it to session as flashdata
-
         // all is well, return successful user
         return done(null, rows[0]);
       });
