@@ -13,8 +13,6 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/", function (req, res, next) {
-  //   pg.connect(connectionString, function (err, client) {
-
   pool.query(
     "INSERT INTO users (username, password) VALUES ($1, $2)",
     [req.body.username, req.body.password],
@@ -23,10 +21,6 @@ router.post("/", function (req, res, next) {
       pool.end();
     }
   );
-
-  // query.on("error", function (err) {
-  //   console.log(err);
-  // });
 });
 
 module.exports = router;
