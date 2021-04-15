@@ -10,11 +10,11 @@ const pool = new Pool({
 });
 
 router.get("/add", async (req, res, next) => {
+  console.log("🚀 ~ file: queue.js ~ line 13 ~ router.get ~ req", req);
   const {
     body: { queue },
   } = req;
   console.log("🚀 ~ file: queue.js ~ line 16 ~ router.get ~ queue", queue);
-  console.log("🚀 ~ file: queue.js ~ line 16 ~ router.get ~ body", body);
 
   await pool.query("INSERT INTO queue (full_name,status) values ($1,$2);", [
     queue.fullName,
