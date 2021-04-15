@@ -48,4 +48,9 @@ router.get("/getList", async (req, res, next) => {
   });
 });
 
+router.get("/resetTable", async (req, res, next) => {
+  pool.query(`TRUNCATE TABLE queue`, (errQ, resQ) => {
+    resQ && res.json(resQ.rows);
+  });
+});
 module.exports = router;
