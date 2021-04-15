@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+var cors = require("cors");
 
 var logger = require("morgan");
 var app = express();
@@ -16,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var flash = require("connect-flash");
 app.use(flash());
 
+app.use(cors()); // Use this after the variable declaration
+
 app.use(
   session({
     secret: "passport-tutorial",
@@ -25,11 +28,11 @@ app.use(
   })
 );
 
-app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+// app.all("/*", function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   next();
+// });
 
 var indexRouter = require("./src/routes/index");
 require("./src/config/passport");
