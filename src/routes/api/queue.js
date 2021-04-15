@@ -39,7 +39,7 @@ router.post("/nextQueue", async (req, res, next) => {
   );
   await pool.query(
     `UPDATE queue SET  status = 2 WHERE  ID =${resInService};
-    UPDATE queue SET  status = 1 WHERE  ID =${resInService + 1};`
+    UPDATE queue SET  status = 1 WHERE  ID =${resInService};`
   );
 
   pool.query(`SELECT * FROM queue`, (errQ, resQ) => {
