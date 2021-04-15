@@ -13,28 +13,13 @@ router.post("/add", async (req, res, next) => {
   const {
     body: { queue },
   } = req;
-
+  const resAll = await pool.query("SELECT * FROM queue;");
+  const inService = resAll.rows.find((el) => el.id === 1);
+  const statusNewQueue = inService ? 0 : 1;
   await pool.query(
     "INSERT INTO queue (full_name , status ) VALUES ( $1 , $2 );",
-    [queue.fullName, "0"]
+    [queue.fullName, statusNewQueue]
   );
-
-  // console.log("🚀 ~ file: queue.js ~ line 21 ~ router.post ~ resAll", resAll);
-
-  const resAll = await pool.query("SELECT * FROM queue;");
-
-  const inService = resAll.rows.find((el) => el.id === 1);
-
-  if (!inService) {
-    console.log(
-      "🚀 ~ file: queue.js ~ line 29 ~ router.post ~ inService",
-      inService
-    );
-    resAll.rows.sort((a, b) => a.id - b.id);
-    await pool.query(
-      `UPDATE queue SET  status = 1 WHERE  ID=${resAll.rows[resAll.rowCount]}`
-    );
-  }
 
   pool.query("SELECT * FROM queue;", (errQ, resQ) => {
     res.json(resQ.rows);
