@@ -25,9 +25,14 @@ router.post("/add", async (req, res, next) => {
 });
 
 router.post("/nextQueue", async (req, res, next) => {
-  const {
-    body: { queue },
-  } = req;
+  // const {
+  //   body: { queue },
+  // } = req;
+
+  const res = await pool.query(`SELECT * FROM queue WHERE  status = 1;`);
+
+  console.log("🚀 ~ file: queue.js ~ line 35 ~ router.post ~ res", res);
+
   await pool.query(
     `UPDATE queue SET  status = 2 WHERE  ID =${queue.currentQueue};
     UPDATE queue SET  status = 1 WHERE  ID =${queue.currentQueue + 1};`
