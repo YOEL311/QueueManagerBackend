@@ -10,18 +10,16 @@ const pool = new Pool({
 });
 
 router.post("/add", async (req, res, next) => {
-  console.log("🚀 ~ file: queue.js ~ line 13 ~ router.get ~ req", req);
   const {
     body: { queue },
   } = req;
-  console.log("🚀 ~ file: queue.js ~ line 16 ~ router.get ~ queue", queue);
 
   await pool.query("INSERT INTO queue (full_name,status) values ($1,$2);", [
     queue.fullName,
     "0",
   ]);
 
-  pool.query("SELECT * FROM queue WHERE  status IN (0, 1);", (errQ, resQ) => {
+  pool.query("SELECT * FROM queue;", (errQ, resQ) => {
     res.json(resQ.rows);
   });
 });
@@ -35,13 +33,13 @@ router.post("/nextQueue", async (req, res, next) => {
     UPDATE queue SET  status = 1 WHERE  ID =${queue.currentQueue + 1};`
   );
 
-  pool.query(`SELECT * FROM queue WHERE status IN (0, 1)`, (errQ, resQ) => {
+  pool.query(`SELECT * FROM queue`, (errQ, resQ) => {
     resQ && res.json(resQ.rows);
   });
 });
 
 router.get("/getList", async (req, res, next) => {
-  pool.query(`SELECT * FROM queue WHERE status IN (0, 1)`, (errQ, resQ) => {
+  pool.query(`SELECT * FROM queue`, (errQ, resQ) => {
     resQ && res.json(resQ.rows);
   });
 });
