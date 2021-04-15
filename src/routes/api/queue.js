@@ -13,6 +13,8 @@ router.get("/add", async (req, res, next) => {
   const {
     body: { queue },
   } = req;
+  console.log("🚀 ~ file: queue.js ~ line 16 ~ router.get ~ queue", queue);
+  console.log("🚀 ~ file: queue.js ~ line 16 ~ router.get ~ body", body);
 
   await pool.query("INSERT INTO queue (full_name,status) values ($1,$2);", [
     queue.fullName,
