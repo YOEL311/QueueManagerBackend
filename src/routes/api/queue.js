@@ -9,7 +9,7 @@ const pool = new Pool({
   ...(isProduction && { ssl: { rejectUnauthorized: false } }),
 });
 
-router.get("/add", async (req, res, next) => {
+router.post("/add", async (req, res, next) => {
   console.log("🚀 ~ file: queue.js ~ line 13 ~ router.get ~ req", req);
   const {
     body: { queue },
@@ -26,7 +26,7 @@ router.get("/add", async (req, res, next) => {
   });
 });
 
-router.get("/nextQueue", async (req, res, next) => {
+router.post("/nextQueue", async (req, res, next) => {
   const {
     body: { queue },
   } = req;
