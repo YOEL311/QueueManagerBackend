@@ -13,8 +13,9 @@ router.post("/add", async (req, res, next) => {
   const {
     body: { queue },
   } = req;
+
   const resAll = await pool.query("SELECT * FROM queue;");
-  const inService = resAll.rows.find((el) => el.id === 1);
+  const inService = resAll.rows.find((el) => el.status === 1);
   const statusNewQueue = inService ? 0 : 1;
   await pool.query(
     "INSERT INTO queue (full_name , status ) VALUES ( $1 , $2 );",
